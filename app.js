@@ -1,4 +1,6 @@
 const { cursos } = require('./datos')
+const express = require('express')
+const app = express()
 
 const opciones = {
   id_curso: {
@@ -45,16 +47,6 @@ async function obtenerCursos(idClave) {
 }
 
 
-const fs = require('fs')
-
-let crearArchivo = (contenidoArchivo) => {
-  fs.writeFile('matricula.txt', contenidoArchivo, (err) => {
-    if (err) throw (err)
-    console.log('\nSe ha creado el archivo con la matricula exitosamente\n')
-  })
-}
-
-
 const argv = require('yargs')
   .command('inscribir', 'Para inscribir el estudiante ingrese datos requeridos:', opciones)
   .argv
@@ -68,8 +60,12 @@ if (!argv.id_curso) {
     console.log('\nIngrese un ID de curso valido, estos son los Cursos: ')
     mostrarCurso(id)
   } else {
-    contenidoArchivo = ('El estudiante ' + argv.nombre_estudiante + '\n' + 'con cedula Nº' + argv.cedula + '\n' +
-      'Se ha matriculado al curso ' + cursosDisponibles.nombre + ' que tiene una duracion de ' + cursosDisponibles.duracion + ' y un valor de ' + cursosDisponibles.valor)
-    crearArchivo(contenidoArchivo)
+    contenidoArchivo = ('El estudiante ' + argv.nombre_estudiante + '<br>' + 'con cedula Nº' + argv.cedula + '<br>' +
+      'Se ha matriculado al curso ' + cursosDisponibles.nombre + '<br>' + ' que tiene una duracion de ' + cursosDisponibles.duracion + ' y un valor de ' + cursosDisponibles.valor)
+    app.get('/', function (req, res) {
+      res.send(contenidoArchivo)
+    })
+    app.listen(3000)
+    console.log('\n' + 'Se ha generado la pagina con la matricula exitosamente, revisa el puerto local:3000')
   }
 }

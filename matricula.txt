@@ -1,0 +1,3 @@
+El estudiante tiago
+con cedula Nº1234
+Se ha matriculado al curso Cocina que tiene una duracion de 40 horas y un valor de 100000
